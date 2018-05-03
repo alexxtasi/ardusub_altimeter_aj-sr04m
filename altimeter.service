@@ -14,6 +14,7 @@ After=multi-user.target
 Type=simple
 ExecStart=/home/pi/altimeter/altimeter.py
 Restart=on-abort
+KillSignal=SIGINT
 
 [Install]
 WantedBy=multi-user.target

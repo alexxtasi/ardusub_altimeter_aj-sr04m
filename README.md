@@ -25,7 +25,8 @@ sudo systemctl start altimeter.service
 
 ### TODO
 - [ ] use functions in python code
-- [ ] perform GPIO cleanup when the service is stopped
+- [x] perform GPIO cleanup when the service is stopped
+- [ ] print service's log into systemd journal logs
 - [x] MAVLink parameters RNGFND_MIN and RNGFND_MAX __should not__ be used for depth hold mode
 - [ ] evaluate sensor's (AJ-SR04M) underwater accuracy (temperature ?)
 
@@ -39,15 +40,20 @@ sudo systemctl start altimeter.service
 1. [AJ-SR04M Integration Ultrasonic Ranging Module](https://www.aliexpress.com/item/AJ-SR04M-Integration-Ultrasonic-Ranging-Module-Reversing-Radar-Waterproof-Ultrasonic-Square-Wave-TTL-Serial-interface-20cm/32822088448.html)
 1. [Understanding Systemd Units and Unit Files](https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files)
 1. [How to run a script as a service in Raspberry Pi - Raspbian Jessie](http://www.diegoacuna.me/how-to-run-a-script-as-a-service-in-raspberry-pi-raspbian-jessie/)
+1. [How to exit a python daemon cleanly?](https://raspberrypi.stackexchange.com/a/77741/85915)
+1. [systemd.kill — Process killing procedure configuration](https://www.freedesktop.org/software/systemd/man/systemd.kill.html)
 ---
+
 ## ArduSub GitBook references
 1. [Altimeters](https://www.ardusub.com/operators-manual/altimeters.html)
 1. [Pymavlink](https://www.ardusub.com/developers/pymavlink.html)
 1. [ArduSub Parameters](https://www.ardusub.com/operators-manual/full-parameter-list.html)
 ---
+
 ## General notes on MAVLink, Underwater Ranging and Acoustics
 1. [Notes on Underwater Ranging](https://www.maxbotix.com/tutorials5/126-notes-on-underwater-ranging.htm)
 1. [Design of a Low-Cost, Underwater Acoustic Modem for Short-Range Sensor Networks](https://cseweb.ucsd.edu/~kastner/papers/oceans10-low_cost_modem.pdf)
 1. [MAVLink Step by Step](https://discuss.ardupilot.org/t/mavlink-step-by-step/9629) by [Pedro Albuquerque](https://discuss.ardupilot.org/u/pedro_albuquerque/summary) on Ardupilot forums
 ---
+
 > License: ![GNU GPLv3 Logo](https://www.gnu.org/graphics/gplv3-88x31.png) [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)

@@ -1,0 +1,20 @@
+# This file is part of ArduSub Altimeter AJ-SR04M project.
+#
+# copy altimeter.service unit file in /etc/systemd/system/ directory
+# and start the service
+
+[Unit]
+Description=Altimeter logging service
+#Documentation=[git_url]
+#Requires=[maybe MAVLink ?]
+#BindsTo=[maybe MAVLink ?]
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/altimeter/altimeter.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+Alias=altimeterd.service

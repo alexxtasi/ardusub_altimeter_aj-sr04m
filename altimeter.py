@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# # TODO: inline description - use of script
+# This program reads distance values from AJ-SR04M ultrasonic sensor and sends to QGC using the Pymavlink module.
+# Is intented to run on an ArduSub's Companion Computer (tested on Raspberry Pi 3 model B with the Companion Software installed).
+#  - placed in /home/pi/altimeter/altimeter.py
+#  - SONAR_MIN and SONAR_MAX variables set to 0 (depth hold mode)
 #
 # Copyright (C) 2018  Alex Tasikas <alextasikas@gmail.com>
 #
@@ -19,8 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 """
-    # TODO: inline description - use of script
-        - ...
+This program reads distance values from AJ-SR04M ultrasonic sensor and sends to QGC using the Pymavlink module.
+Is intented to run on an ArduSub's Companion Computer (tested on Raspberry Pi 3 model B with the Companion Software installed).
+    - placed in /home/pi/altimeter/altimeter.py
+    - SONAR_MIN and SONAR_MAX variables set to 0 (depth hold mode)
 """
 
 from pymavlink import mavutil
@@ -29,8 +34,8 @@ import RPi.GPIO as GPIO
 
 # set max and min sensor values in cm
 # these are for AJ-SR04M sensor
-SONAR_MIN = 20
-SONAR_MAX = 800
+SONAR_MIN = 0   # SONAR_MIN = 20
+SONAR_MAX = 0   # SONAR_MAX = 800
 
 # select GPIO pins to use
 GPIO_TRIGGER = 23
@@ -43,13 +48,15 @@ def setup():
     GPIO.setup(GPIO_TRIGGER,GPIO.OUT)
     # set GPIO_ECHO to INPUT mode
     GPIO.setup(GPIO_ECHO,GPIO.IN)
+    # DEBUG:
+    print(setup.__name__ + " : GPIO set.")
 
 def sonar():
     # distance measurements in cm
     # set GPIO_TRIGGER to LOW
     GPIO.output(GPIO_TRIGGER, False)
     # let the sensor settle for a while
-    print "Waiting For Sensor To Settle"
+    #print "Waiting For Sensor To Settle"
     time.sleep(0.5)     # time.sleep(2)
     # send 10 microsecond pulse to GPIO_TRIGGER
     GPIO.output(GPIO_TRIGGER, True) # GPIO_TRIGGER -> HIGH
@@ -82,7 +89,7 @@ def sonar():
 
     # TODO: print messages to a log file ???
     # print the distance
-    print("Distance : {0:5.1f}cm".format(distance))
+    #print("Distance : {0:5.1f}cm".format(distance))
 
     return distance
 
@@ -109,6 +116,11 @@ def main():
     id = 1
     orientation = mavutil.mavlink.MAV_SENSOR_ROTATION_PITCH_270 # downward facing
     covariance = 0
+
+    # DEBUG:
+    print(main.__name__ + " : MAVLink parameters set.")
+    #print(main.__name__ + " : " + master)
+
     # TODO: why is that ??
     tstart = time.time()
     while True:
@@ -133,14 +145,16 @@ if __name__ == '__main__':
     # run main forever
     try:
         main()
-    # stop on Ctrl+C and clean up
     except KeyboardInterrupt:
+        # stop on Ctrl+C
+        # DEBUG:
+        print("Keyboard Interrupt!")
+    except:
+        # unexpected error
+        # DEBUG:
+        print("Unexpected Error!")
+    finally:
         # Reset GPIO settings
-        print("... cleaning up GPIO ...")
-        # reset GPIO
+        # DEBUG:
+        print("GPIO cleanup ... exiting")
         GPIO.cleanup()
-    # except:
-    #   print("unexpected error!")
-    # finally:
-    #   # reset GPIO
-    #   GPIO.cleanup()
